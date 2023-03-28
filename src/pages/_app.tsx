@@ -6,6 +6,7 @@ import {
 import { type AppProps } from "next/app";
 import { Inter, Roboto_Mono } from "next/font/google";
 import { useState } from "react";
+import { Toaster } from "sonner";
 import "~/styles/globals.css";
 import { api } from "~/utils/api";
 
@@ -39,6 +40,7 @@ const MyApp = ({
           font-family: ${inter.style.fontFamily};
         }
       `}</style>
+      <Toaster />
       <Component {...pageProps} />
     </SessionContextProvider>
   );
