@@ -121,6 +121,8 @@ const Home: NextPage = () => {
             <img
               className="h-6 w-6 rounded-full"
               src="https://github.com/davialcantaraa.png"
+              // width={24}
+              // height={24}
               alt="Rounded avatar"
             />
             Davi Alcântara

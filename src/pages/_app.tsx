@@ -32,7 +32,6 @@ const MyApp = ({
   return (
     <SessionContextProvider
       supabaseClient={supabaseClient}
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       initialSession={pageProps.initialSession}
     >
       <style jsx global>{`
@@ -40,7 +39,7 @@ const MyApp = ({
           font-family: ${inter.style.fontFamily};
         }
       `}</style>
-      <Toaster />
+      <Toaster richColors />
       <Component {...pageProps} />
     </SessionContextProvider>
   );

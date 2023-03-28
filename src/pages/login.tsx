@@ -25,7 +25,7 @@ const Home: NextPage = () => {
               type="email"
               id="helper-text"
               aria-describedby="helper-text-explanation"
-              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-gray-500 focus:ring-gray-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-gray-500 dark:focus:ring-gray-500"
+              className="block w-full rounded-lg border border-gray-300 bg-gray-300 p-2.5 text-sm text-gray-900 placeholder-gray-500 focus:border-gray-500  focus:ring-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-gray-500 dark:focus:ring-gray-500"
               placeholder="name@flowbite.com"
             />
             <button
@@ -63,9 +63,16 @@ const Home: NextPage = () => {
             </button>
             <p
               id="helper-text-explanation"
-              className="mt-2 text-sm text-gray-500 dark:text-gray-400"
+              className="mt-8 text-xs text-gray-500 dark:text-gray-400"
             >
-              We’ll never share your details. Read our{" "}
+              By signing in, you agree to our{" "}
+              <a
+                href="#"
+                className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+              >
+                Terms of Service
+              </a>{" "}
+              and{" "}
               <a
                 href="#"
                 className="font-medium text-blue-600 hover:underline dark:text-blue-500"
