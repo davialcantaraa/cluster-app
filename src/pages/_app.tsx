@@ -3,11 +3,11 @@ import {
   SessionContextProvider,
   type Session,
 } from "@supabase/auth-helpers-react";
-import { type AppProps } from "next/app";
-import { Inter, Roboto_Mono } from "next/font/google";
-import { useState } from "react";
+import { Inter } from "next/font/google";
+import { ReactElement, useState } from "react";
 import { Toaster } from "sonner";
 import "~/styles/globals.css";
+import type { AppPropsWithLayout } from "~/types/global";
 import { api } from "~/utils/api";
 
 const inter = Inter({
@@ -16,19 +16,22 @@ const inter = Inter({
   display: "swap",
 });
 
-const roboto_mono = Roboto_Mono({
-  subsets: ["latin"],
-  variable: "--font-roboto-mono",
-  display: "swap",
-});
+// const roboto_mono = Roboto_Mono({
+//   subsets: ["latin"],
+//   variable: "--font-roboto-mono",
+//   display: "swap",
+// });
 
 const MyApp = ({
   Component,
   pageProps,
-}: AppProps<{
+}: AppPropsWithLayout<{
   initialSession: Session;
 }>) => {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
+
+  const getLayout = Component.getLayout ?? ((page: ReactElement) => page);
+
   return (
     <SessionContextProvider
       supabaseClient={supabaseClient}
@@ -40,7 +43,7 @@ const MyApp = ({
         }
       `}</style>
       <Toaster richColors />
-      <Component {...pageProps} />
+      {getLayout(<Component {...pageProps} />)}
     </SessionContextProvider>
   );
 };
