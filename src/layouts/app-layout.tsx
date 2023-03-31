@@ -1,10 +1,9 @@
 import { PropsWithChildren } from "react";
-import { DocumentsNavigation } from "~/components/documents-navigation";
-
+import { Sidebar } from "~/components/ui/sidebar";
 export const AppLayout = ({ children }: PropsWithChildren) => {
   return (
     <section className="sm:ml-64">
-      <DocumentsNavigation />
+      <Sidebar />
       {children}
     </section>
   );
