@@ -1,4 +1,4 @@
-import { ChevronRight, File, Folder } from "lucide-react";
+import { ChevronDown, ChevronRight, File, Folder } from "lucide-react";
 import { NodeRendererProps, Tree } from "react-arborist";
 import { TreeProps } from "react-arborist/dist/types/tree-props";
 
@@ -43,7 +43,8 @@ export const PagesTree = (props: TreeProps<any>) => {
 const Node = (props: NodeRendererProps<any>) => {
   return (
     <div
-      {...props}
+      ref={props.dragHandle}
+      style={props.style}
       onClick={() => props.node.isInternal && props.node.toggle()}
     >
       <li>
@@ -52,7 +53,11 @@ const Node = (props: NodeRendererProps<any>) => {
           className="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
         >
           <div className="flex gap-3">
-            {!props.node.isLeaf && <ChevronRight size={16} />}
+            {!props.node.isLeaf && props.node.isOpen ? (
+              <ChevronDown size={16} />
+            ) : props.node.isClosed ? (
+              <ChevronRight size={16} />
+            ) : null}
             {props.node.isLeaf ? <File size={16} /> : <Folder size={16} />}
           </div>
           <span className="ml-3">{props.node.data.name}</span>
