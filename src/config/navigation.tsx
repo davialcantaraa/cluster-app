@@ -1,8 +1,8 @@
 import { Calendar, CheckSquare, FileDown, Trash2 } from "lucide-react";
 
-export const navigationBaseItems = [
+export const navigationPrimaryItems = [
   {
-    value: "calendar",
+    value: "primary",
     items: [
       {
         label: "Calendar",
@@ -18,8 +18,11 @@ export const navigationBaseItems = [
       },
     ],
   },
+];
+
+export const navigationSecondaryItems = [
   {
-    value: "main",
+    value: "secondary",
     items: [
       {
         label: "Import",
