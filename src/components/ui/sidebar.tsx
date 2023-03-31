@@ -2,7 +2,7 @@ import {
   navigationPrimaryItems,
   navigationSecondaryItems,
 } from "~/config/navigation";
-import { PagesTree } from "./file-tree";
+import { PagesTree } from "../file-tree";
 import { Logo } from "./logo";
 import { UserMenu } from "./user-menu";
 
@@ -32,19 +32,6 @@ export const Sidebar = () => {
             </div>
           ))}
           <PagesTree />
-          {/* <Tree>
-            <Tree.File name="package.json" />
-            <Tree.Folder name="components">
-              <Tree.File name="layout.js" />
-              <Tree.Folder name="footer">
-                <Tree.File name="footer.js" />
-                <Tree.File name="footer-text.js" />
-                <Tree.File name="footer-license.js" />
-              </Tree.Folder>
-              <Tree.File name="header.js" />
-            </Tree.Folder>
-            <Tree.File name="readme.md" />
-          </Tree> */}
           {navigationSecondaryItems.map((navigation) => (
             <div key={navigation.value} className="space-y-1">
               {navigation.items.map((item) => (
