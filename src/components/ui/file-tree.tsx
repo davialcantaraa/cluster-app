@@ -1,5 +1,5 @@
 import { ChevronDown, ChevronRight, File, Folder } from "lucide-react";
-import { NodeRendererProps, Tree } from "react-arborist";
+import { CursorProps, NodeRendererProps, Tree } from "react-arborist";
 import { TreeProps } from "react-arborist/dist/types/tree-props";
 
 const data = [
@@ -29,10 +29,10 @@ export const PagesTree = (props: TreeProps<any>) => {
   return (
     <Tree
       initialData={data}
-      // openByDefault={false}
+      openByDefault={false}
+      renderCursor={Cursor}
       width="100%"
       rowHeight={34}
-      rowClassName="!space-y-1"
       {...props}
     >
       {Node}
@@ -64,5 +64,11 @@ const Node = (props: NodeRendererProps<any>) => {
         </a>
       </li>
     </div>
+  );
+};
+
+const Cursor = ({ top, left }: CursorProps) => {
+  return (
+    <div className="absolute z-10 h-px w-full bg-black" style={{ top, left }} />
   );
 };
