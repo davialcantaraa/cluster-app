@@ -1,6 +1,41 @@
+import useResizeObserver from "@react-hook/resize-observer";
 import { ChevronDown, ChevronRight, File, Folder } from "lucide-react";
-import { CursorProps, NodeRendererProps, Tree } from "react-arborist";
+import {
+  MutableRefObject,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
+import { CursorProps, NodeRendererProps, Tree, TreeApi } from "react-arborist";
 import { TreeProps } from "react-arborist/dist/types/tree-props";
+
+interface Size {
+  width: number;
+  height: number;
+}
+
+export function useElementSize<T extends HTMLElement = HTMLDivElement>(): [
+  MutableRefObject<T | null>,
+  Size
+] {
+  const target = useRef<T | null>(null);
+  const [size, setSize] = useState<Size>({
+    width: 0,
+    height: 0,
+  });
+
+  useLayoutEffect(() => {
+    target.current && setSize(target.current.getBoundingClientRect());
+  }, [target]);
+
+  useResizeObserver(target, (entry: any) => {
+    const { inlineSize: width, blockSize: height } = entry.contentBoxSize[0];
+    setSize({ width, height });
+  });
+
+  return [target, size];
+}
 
 const data = [
   { id: "1", name: "Unread" },
@@ -23,21 +58,76 @@ const data = [
       { id: "d3", name: "Charlie" },
     ],
   },
+  {
+    id: "5",
+    name: "Direct Messages",
+    children: [
+      { id: "d1", name: "Alice" },
+      { id: "d2", name: "Bob" },
+      { id: "d3", name: "Charlie" },
+    ],
+  },
+  {
+    id: "6",
+    name: "Direct Messages",
+    children: [
+      { id: "d1", name: "Alice" },
+      { id: "d2", name: "Bob" },
+      { id: "d3", name: "Charlie" },
+    ],
+  },
+  {
+    id: "7",
+    name: "Direct Messages",
+    children: [
+      { id: "d1", name: "Alice" },
+      { id: "d2", name: "Bob" },
+      { id: "d3", name: "Charlie" },
+    ],
+  },
+  {
+    id: "8",
+    name: "Direct Messages",
+    children: [
+      { id: "d1", name: "Alice" },
+      { id: "d2", name: "Bob" },
+      { id: "d3", name: "Charlie" },
+    ],
+  },
 ];
 
 export const PagesTree = (props: TreeProps<any>) => {
-  return (
+  const treeRef = useRef<TreeApi<any>>(null);
+  const [height, setHeight] = useState(data.length * 36);
+
+  const TreeView = (
     <Tree
+      ref={treeRef}
       initialData={data}
       openByDefault={false}
       renderCursor={Cursor}
       width="100%"
+      height={height}
       rowHeight={34}
+      className="!h-fit w-full !overflow-hidden"
+      onToggle={(value) => {
+        const toggledItem = data.find((item) => item.id === value);
+        const itemCount = toggledItem?.children?.length;
+        setHeight((prev) => prev + 36 * itemCount!);
+      }}
       {...props}
     >
       {Node}
     </Tree>
   );
+
+  useEffect(() => {
+    const tree = treeRef.current;
+    const openedItems = tree?.visibleNodes;
+    if (openedItems) setHeight(openedItems?.length * 36);
+  }, [TreeView]);
+
+  return TreeView;
 };
 
 const Node = (props: NodeRendererProps<any>) => {

@@ -1,7 +1,7 @@
 import { ChevronDown, Folder } from "lucide-react";
 import React, { useEffect, useMemo, useState } from "react";
 import useClasses from "~/hooks/use-classes";
-import { setChildrenProps } from "~/utils/collections";
+import { setChildrenProps } from "../collections";
 import Expand from "./expand";
 import { useTreeContext } from "./tree-context";
 import TreeFile from "./tree-file";
