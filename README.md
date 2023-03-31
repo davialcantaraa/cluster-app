@@ -1,4 +1,4 @@
-![React email cover](/.github/images/preview.png)
+![Cluster App cover](/.github/images/preview.png)
 
 <div align="center"><strong>Cluster App</strong></div>
 <div align="center">The open source all-in-one workspace.<br />Cluster is a open source Notion-like alternative. Combine documents, calendars, tasks and such more.</div>

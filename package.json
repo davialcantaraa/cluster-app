@@ -13,6 +13,8 @@
   "dependencies": {
     "@hookform/resolvers": "3.0.0",
     "@prisma/client": "^4.9.0",
+    "@radix-ui/react-avatar": "1.0.2",
+    "@radix-ui/react-dropdown-menu": "2.0.4",
     "@supabase/auth-helpers-nextjs": "0.5.6",
     "@supabase/auth-helpers-react": "0.3.1",
     "@supabase/supabase-js": "2.12.1",
@@ -21,12 +23,17 @@
     "@trpc/next": "^10.9.0",
     "@trpc/react-query": "^10.9.0",
     "@trpc/server": "^10.9.0",
+    "class-variance-authority": "0.4.0",
+    "clsx": "1.2.1",
+    "lucide-react": "0.129.0",
     "next": "^13.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "7.43.8",
     "sonner": "0.3.0",
     "superjson": "1.9.1",
+    "tailwind-merge": "1.11.0",
+    "tailwindcss-animate": "1.0.5",
     "zod": "3.21.4"
   },
   "devDependencies": {
