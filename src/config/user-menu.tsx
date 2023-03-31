@@ -66,7 +66,7 @@ export const userMenuItems: userMenuGroup[] = [
       {
         icon: <Users className="mr-2 h-4 w-4" />,
         label: "Teams",
-        value: "kbd_shortcuts",
+        value: "teams",
         subItems: [
           {
             icon: <Plus className="mr-2 h-4 w-4" />,

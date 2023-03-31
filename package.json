@@ -28,6 +28,7 @@
     "lucide-react": "0.129.0",
     "next": "^13.2.1",
     "react": "18.2.0",
+    "react-arborist": "3.0.2",
     "react-dom": "18.2.0",
     "react-hook-form": "7.43.8",
     "sonner": "0.3.0",

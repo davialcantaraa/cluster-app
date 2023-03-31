@@ -2,7 +2,7 @@ import {
   navigationPrimaryItems,
   navigationSecondaryItems,
 } from "~/config/navigation";
-import Tree from "./file-tree";
+import { PagesTree } from "./file-tree";
 import { Logo } from "./logo";
 import { UserMenu } from "./user-menu";
 
@@ -31,7 +31,8 @@ export const Sidebar = () => {
               ))}
             </div>
           ))}
-          <Tree>
+          <PagesTree />
+          {/* <Tree>
             <Tree.File name="package.json" />
             <Tree.Folder name="components">
               <Tree.File name="layout.js" />
@@ -43,7 +44,7 @@ export const Sidebar = () => {
               <Tree.File name="header.js" />
             </Tree.Folder>
             <Tree.File name="readme.md" />
-          </Tree>
+          </Tree> */}
           {navigationSecondaryItems.map((navigation) => (
             <div key={navigation.value} className="space-y-1">
               {navigation.items.map((item) => (
