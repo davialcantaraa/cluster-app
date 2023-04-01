@@ -1,4 +1,5 @@
 import { cva, VariantProps } from "class-variance-authority";
+import { motion } from "framer-motion";
 import * as React from "react";
 import { cn } from "~/lib/utils";
 
@@ -49,4 +50,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 );
 Button.displayName = "Button";
 
-export { Button, buttonVariants };
+const AnimatedButton = motion(Button);
+
+export { Button, buttonVariants, AnimatedButton };
