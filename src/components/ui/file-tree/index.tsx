@@ -4,6 +4,9 @@ import { CursorProps, NodeRendererProps, Tree, TreeApi } from "react-arborist";
 import { TreeProps } from "react-arborist/dist/types/tree-props";
 import { FileTreeProvider, useFileTreeProvider } from "./file-tree-provider";
 
+// TODO:
+// Fix node focus
+
 const data = [
   { id: "1", name: "Unread" },
   { id: "2", name: "Threads" },
@@ -40,8 +43,8 @@ const PagesTreeContent = (props: TreeProps<any>) => {
       renderCursor={Cursor}
       width="100%"
       height={height}
+      className="scrollbar scrollbar-none"
       rowHeight={34}
-      className="!h-fit w-full !overflow-hidden"
       {...props}
     >
       {Node}
@@ -51,7 +54,6 @@ const PagesTreeContent = (props: TreeProps<any>) => {
   useEffect(() => {
     const tree = treeRef.current;
     const openedItems = tree?.visibleNodes;
-    console.log(openedItems?.length);
     if (openedItems) {
       setHeight(openedItems?.length * 36);
     }
