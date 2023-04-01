@@ -19,7 +19,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 
 export const UserMenu = () => {
   return (
-    <div className="w-full border-t px-4 py-6">
+    <div className="w-full border-t px-4 py-3">
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="p-2">
           <button className="flex w-full items-center justify-between rounded-md transition-colors hover:bg-gray-100 focus:outline-none">
