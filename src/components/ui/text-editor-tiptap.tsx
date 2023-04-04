@@ -2,15 +2,12 @@ import Document from "@tiptap/extension-document";
 import Placeholder from "@tiptap/extension-placeholder";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { useInputDelay } from "~/hooks/use-input-delay";
 
 const CustomDocument = Document.extend({
   content: "heading block*",
 });
 
 export const TextEditorTipTap = () => {
-  const { handleInputChange, inputValue } = useInputDelay(1500);
-
   const editor = useEditor({
     extensions: [
       CustomDocument,
@@ -31,12 +28,11 @@ export const TextEditorTipTap = () => {
     editorProps: {
       attributes: {
         class:
-          "prose dark:prose-invert prose-p:my-0 prose-sm sm:prose-base lg:prose-lg xl:prose-md m-2 focus:outline-none !m-10",
+          "prose dark:prose-invert prose-p:my-0 prose-sm sm:prose-base lg:prose-lg xl:prose-md m-2 focus:outline-none !m-20",
       },
     },
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
-      handleInputChange(html);
     },
   });
 
