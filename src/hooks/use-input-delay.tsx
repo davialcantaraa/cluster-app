@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export function useInputDelay(delayTime: number) {
+export function useInputDelay(delayTime: number, callback: any) {
   const [inputValue, setInputValue] = useState<string>("");
   const [typingTimeout, setTypingTimeout] = useState<any>(null);
 
@@ -10,7 +10,7 @@ export function useInputDelay(delayTime: number) {
     }
     setTypingTimeout(
       setTimeout(() => {
-        console.log(inputValue);
+        callback();
       }, delayTime)
     );
     return () => clearTimeout(typingTimeout);

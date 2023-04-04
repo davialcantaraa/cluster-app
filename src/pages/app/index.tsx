@@ -2,7 +2,6 @@ import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSideProps } from "next";
 import nookies from "nookies";
 import { ReactElement } from "react";
-import { TextEditorTipTap } from "~/components/ui/text-editor-tiptap";
 import { AppLayout } from "~/layouts/app-layout";
 import { supabase } from "~/services/supabase";
 import type { NextPageWithLayout } from "~/types/global";
@@ -10,9 +9,7 @@ import type { NextPageWithLayout } from "~/types/global";
 const AppPage: NextPageWithLayout = () => {
   return (
     <main className="flex justify-center">
-      <div className="min-w-4xl max-w-4xl">
-        <TextEditorTipTap />
-      </div>
+      <div className="min-w-4xl max-w-4xl"></div>
     </main>
   );
 };

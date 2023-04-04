@@ -2,12 +2,20 @@ import Document from "@tiptap/extension-document";
 import Placeholder from "@tiptap/extension-placeholder";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { useDocument } from "~/providers/document-provider";
+import { IDocument } from "~/types/document";
 
 const CustomDocument = Document.extend({
   content: "heading block*",
 });
 
-export const TextEditorTipTap = () => {
+interface TextEditorTipTapProps {
+  document: IDocument;
+}
+
+export const TextEditorTipTap = ({ document }: TextEditorTipTapProps) => {
+  const { handleDocumentInputChange } = useDocument(document);
+
   const editor = useEditor({
     extensions: [
       CustomDocument,
@@ -33,7 +41,9 @@ export const TextEditorTipTap = () => {
     },
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
+      handleDocumentInputChange(html);
     },
+    content: document.content,
   });
 
   return (
