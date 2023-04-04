@@ -45,6 +45,7 @@ const PagesTreeContent = (props: TreeProps<any>) => {
       height={height}
       className="scrollbar scrollbar-none"
       rowHeight={34}
+      indent={28}
       {...props}
     >
       {Node}
