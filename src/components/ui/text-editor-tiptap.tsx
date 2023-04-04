@@ -2,12 +2,15 @@ import Document from "@tiptap/extension-document";
 import Placeholder from "@tiptap/extension-placeholder";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { useInputDelay } from "~/hooks/use-input-delay";
 
 const CustomDocument = Document.extend({
   content: "heading block*",
 });
 
 export const TextEditorTipTap = () => {
+  const { handleInputChange, inputValue } = useInputDelay(1500);
+
   const editor = useEditor({
     extensions: [
       CustomDocument,
@@ -19,9 +22,9 @@ export const TextEditorTipTap = () => {
           "cursor-text before:content-[attr(data-placeholder)] before:absolute  before:text-mauve-11 before:opacity-50 before-pointer-events-none",
         placeholder: ({ node }) => {
           if (node.type.name === "heading") {
-            return "What’s the title?";
+            return "Untitled";
           }
-          return "Can you add some further context?";
+          return "";
         },
       }),
     ],
@@ -31,11 +34,10 @@ export const TextEditorTipTap = () => {
           "prose dark:prose-invert prose-p:my-0 prose-sm sm:prose-base lg:prose-lg xl:prose-md m-2 focus:outline-none !m-10",
       },
     },
-    content: `
-       <h1>
-         It’ll always have a heading …
-       </h1>
-     `,
+    onUpdate: ({ editor }) => {
+      const html = editor.getHTML();
+      handleInputChange(html);
+    },
   });
 
   return (

@@ -11,6 +11,12 @@ import { PagesTree } from "./file-tree";
 import { Logo } from "./logo";
 import { UserMenu } from "./user-menu";
 
+//  TODO:
+//  Fix tab navigation (Apply shadui tabbar?)
+//  Integrate to supabase
+//  Create loading state
+// https://github.com/radix-ui/design-system/blob/master/components/Skeleton.tsx
+
 export const Sidebar = () => {
   const { isSidebarVisible, handleToggleSidebar } = useWindowProvider();
 
@@ -73,7 +79,7 @@ export const Sidebar = () => {
             {navigationSecondaryItems.map((navigation) => (
               <div key={navigation.value} className="space-y-1">
                 {navigation.items.map((item) => (
-                  <li key={item.value}>
+                  <li key={item.value} tabIndex={0}>
                     <a
                       href="#"
                       className="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"

@@ -1,4 +1,5 @@
 import { ChevronUp } from "lucide-react";
+import { Fragment } from "react";
 
 import {
   DropdownMenu,
@@ -22,7 +23,7 @@ export const UserMenu = () => {
     <div className="w-full border-t px-4 py-3">
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="p-2">
-          <button className="flex w-full items-center justify-between rounded-md transition-colors hover:bg-gray-100 focus:outline-none">
+          <button className="flex w-full items-center justify-between rounded-md transition-colors focus:outline-none hover:bg-gray-100">
             <div className="flex items-center gap-2">
               <Avatar className="h-6 w-6">
                 <AvatarImage
@@ -41,8 +42,8 @@ export const UserMenu = () => {
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           {userMenuItems.map((group, index) => (
-            <>
-              <DropdownMenuGroup key={group.id}>
+            <Fragment key={group.id}>
+              <DropdownMenuGroup>
                 {group.items.map((item) =>
                   item.subItems ? (
                     <DropdownMenuSub key={item.value}>
@@ -75,7 +76,7 @@ export const UserMenu = () => {
                 )}
               </DropdownMenuGroup>
               {index !== userMenuItems.length && <DropdownMenuSeparator />}
-            </>
+            </Fragment>
           ))}
         </DropdownMenuContent>
       </DropdownMenu>
