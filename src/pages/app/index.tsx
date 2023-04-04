@@ -1,12 +1,15 @@
 import { ReactElement } from "react";
+import { TextEditorTipTap } from "~/components/ui/text-editor-tiptap";
 import { AppLayout } from "~/layouts/app-layout";
 import type { NextPageWithLayout } from "~/types/global";
 
 const AppPage: NextPageWithLayout = () => {
   return (
-    <div>
-      <h1>Protected app</h1>
-    </div>
+    <main className="flex justify-center">
+      <div className="min-w-4xl max-w-4xl">
+        <TextEditorTipTap />
+      </div>
+    </main>
   );
 };
 
