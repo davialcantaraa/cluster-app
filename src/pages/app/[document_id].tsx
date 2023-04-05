@@ -13,10 +13,8 @@ interface DocumentPageProps {
 
 const DocumentPage: NextPageWithLayout = ({ document }: DocumentPageProps) => {
   return (
-    <main className="flex justify-center">
-      <div className="min-w-4xl max-w-4xl">
-        <TextEditorTipTap document={document} />
-      </div>
+    <main className="flex h-screen justify-center">
+      <TextEditorTipTap incomingDocument={document} />
     </main>
   );
 };

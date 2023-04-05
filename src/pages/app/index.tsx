@@ -56,6 +56,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       .insert({
         user_id: user.id,
         content: "",
+        title: "Untitled",
         updated_at: new Date(),
       })
       .select();

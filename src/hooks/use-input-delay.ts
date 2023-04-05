@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useDidUpdate } from "rooks";
 
 export function useInputDelay(delayTime: number, callback: any) {
   const [inputValue, setInputValue] = useState<string>("");
   const [typingTimeout, setTypingTimeout] = useState<any>(null);
 
-  useEffect(() => {
+  useDidUpdate(() => {
     if (typingTimeout) {
       clearTimeout(typingTimeout);
     }
