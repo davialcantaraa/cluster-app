@@ -1,3 +1,4 @@
+import { useHotkeys } from "@mantine/hooks";
 import {
   createContext,
   PropsWithChildren,
@@ -19,6 +20,13 @@ interface IWindowContext {
 const WindowContext = createContext({} as IWindowContext);
 
 export const WindowProvider = ({ children }: PropsWithChildren) => {
+  useHotkeys([
+    ["mod+J", () => console.log("Toggle color scheme")],
+    ["ctrl+K", () => console.log("Trigger search")],
+    ["ctrl+J", () => console.log("Trigger search")],
+    ["alt+mod+shift+X", () => console.log("Rick roll")],
+    ["ctrl+B", () => handleToggleSidebar()],
+  ]);
   const invisibleSidebarButtonRef = useRef<HTMLButtonElement>(null);
   const visibleSidebarButtonRef = useRef<HTMLButtonElement>(null);
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
