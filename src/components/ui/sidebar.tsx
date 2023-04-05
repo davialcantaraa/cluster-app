@@ -1,12 +1,12 @@
-import { motion } from "framer-motion";
 import { Menu } from "lucide-react";
+import { useDidUpdate } from "rooks";
 import {
   navigationPrimaryItems,
   navigationSecondaryItems,
 } from "~/config/navigation";
 import { cn } from "~/lib/utils";
 import { useWindowProvider } from "~/providers/window-provider";
-import { AnimatedButton } from "./button";
+import { Button } from "./button";
 import { PagesTree } from "./file-tree";
 import { Logo } from "./logo";
 import { UserMenu } from "./user-menu";
@@ -18,17 +18,25 @@ import { UserMenu } from "./user-menu";
 // https://github.com/radix-ui/design-system/blob/master/components/Skeleton.tsx
 
 export const Sidebar = () => {
-  const { isSidebarVisible, handleToggleSidebar } = useWindowProvider();
+  const {
+    isSidebarVisible,
+    handleToggleSidebar,
+    invisibleSidebarButtonRef,
+    visibleSidebarButtonRef,
+  } = useWindowProvider();
+
+  useDidUpdate(() => {
+    if (isSidebarVisible) {
+      visibleSidebarButtonRef.current?.focus();
+    } else {
+      invisibleSidebarButtonRef.current?.focus();
+    }
+  }, [handleToggleSidebar]);
 
   return (
     <>
-      <AnimatedButton
-        initial={{
-          opacity: 0,
-          x: -100,
-        }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 3 }}
+      <Button
+        ref={invisibleSidebarButtonRef}
         onClick={handleToggleSidebar}
         variant="ghost"
         className={cn(
@@ -37,18 +45,12 @@ export const Sidebar = () => {
         )}
       >
         <Menu />
-      </AnimatedButton>
-      <motion.aside
-        animate={{
-          width: isSidebarVisible ? "16rem" : 0,
-          opacity: isSidebarVisible ? 1 : 0,
-          // x: !isSidebarVisible ? -100 : 0,
-        }}
-        transition={{ duration: 0.3 }}
+      </Button>
+      <aside
         id="default-sidebar"
         className={cn(
-          "fixed top-0 left-0 z-40 flex h-screen max-h-screen w-64 -translate-x-full flex-col justify-between overflow-hidden border-r-[1px] bg-white transition-transform dark:bg-gray-800 sm:translate-x-0",
-          isSidebarVisible && "whitespace-nowrap"
+          "fixed top-0 left-0 z-40 h-screen max-h-screen w-64 -translate-x-full flex-col justify-between border-r-[1px] bg-white transition-transform dark:bg-gray-800 sm:translate-x-0",
+          isSidebarVisible ? "flex" : "hidden"
         )}
         aria-label="Sidebar"
       >
@@ -94,7 +96,7 @@ export const Sidebar = () => {
           </ul>
         </div>
         <UserMenu />
-      </motion.aside>
+      </aside>
     </>
   );
 };

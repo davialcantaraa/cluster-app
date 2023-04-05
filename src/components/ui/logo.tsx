@@ -10,7 +10,8 @@ import {
 } from "./tooltip";
 
 export const Logo = () => {
-  const { handleToggleSidebar } = useWindowProvider();
+  const { handleToggleSidebar, visibleSidebarButtonRef } = useWindowProvider();
+
   return (
     <div className="flex w-full items-center justify-between border-b p-3">
       <Link href="/" className="flex gap-2">
@@ -21,6 +22,7 @@ export const Logo = () => {
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
+              ref={visibleSidebarButtonRef}
               variant="ghost"
               className="h-fit w-fit p-1 text-gray-400 hover:text-gray-500"
               onClick={handleToggleSidebar}
