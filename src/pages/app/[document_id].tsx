@@ -2,7 +2,9 @@ import { GetServerSideProps } from "next";
 import { ReactElement } from "react";
 import { TextEditorTipTap } from "~/components/ui/text-editor-tiptap";
 import { AppLayout } from "~/layouts/app-layout";
+import { cn } from "~/lib/utils";
 import { UUIDSchema } from "~/lib/validation/utils";
+import { useWindowProvider } from "~/providers/window-provider";
 import { supabase } from "~/services/supabase";
 import { IDocument } from "~/types/document";
 import { NextPageWithLayout } from "~/types/global";
@@ -12,8 +14,10 @@ interface DocumentPageProps {
 }
 
 const DocumentPage: NextPageWithLayout = ({ document }: DocumentPageProps) => {
+  const { isSidebarVisible } = useWindowProvider();
+
   return (
-    <main className="flex h-screen justify-center">
+    <main className={cn("flex justify-center", isSidebarVisible && "sm:ml-64")}>
       <TextEditorTipTap incomingDocument={document} />
     </main>
   );

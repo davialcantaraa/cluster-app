@@ -13,10 +13,8 @@ export const AppLayout = ({ children }: PropsWithChildren) => {
 
   return (
     <AppProviders>
-      <section className="sm:ml-64">
-        <Sidebar />
-        {children}
-      </section>
+      <Sidebar />
+      {children}
     </AppProviders>
   );
 };

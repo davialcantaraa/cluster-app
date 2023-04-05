@@ -3,12 +3,16 @@ import { GetServerSideProps } from "next";
 import nookies from "nookies";
 import { ReactElement } from "react";
 import { AppLayout } from "~/layouts/app-layout";
+import { cn } from "~/lib/utils";
+import { useWindowProvider } from "~/providers/window-provider";
 import { supabase } from "~/services/supabase";
 import type { NextPageWithLayout } from "~/types/global";
 
 const AppPage: NextPageWithLayout = () => {
+  const { isSidebarVisible } = useWindowProvider();
+
   return (
-    <main className="flex justify-center">
+    <main className={cn("flex justify-center", isSidebarVisible && "sm:ml-64")}>
       <div className="min-w-4xl max-w-4xl"></div>
     </main>
   );
