@@ -5,6 +5,7 @@ import { CursorProps, NodeRendererProps, Tree, TreeApi } from "react-arborist";
 import { TreeProps } from "react-arborist/dist/types/tree-props";
 import { useDidUpdate } from "rooks";
 import { useDocument } from "~/providers/document-provider";
+import { FileSkeleton } from "./file-skeleton";
 import { FileTreeProvider, useFileTreeProvider } from "./file-tree-provider";
 
 const PagesTreeContent = (props: TreeProps<any>) => {
@@ -21,7 +22,7 @@ const PagesTreeContent = (props: TreeProps<any>) => {
       renderCursor={Cursor}
       width="100%"
       height={height}
-      className="scrollbar scrollbar-none focus:outline-none"
+      className="scrollbar scrollbar-none focus:outline-none focus-visible:outline-none"
       rowHeight={34}
       indent={28}
       {...props}
@@ -44,7 +45,7 @@ const PagesTreeContent = (props: TreeProps<any>) => {
     tree?.update(documentsFileTree);
   }, [documentsFileTree]);
 
-  if (!documentsFileTree.length) return null;
+  if (!documentsFileTree.length) return <FileSkeleton count={1} />;
 
   return TreeView;
 };
@@ -62,10 +63,10 @@ const Node = (props: NodeRendererProps<any>) => {
       }}
       className="focus:outline-none focus-visible:outline-none"
     >
-      <li>
+      <li className="focus:outline-none focus-visible:outline-none">
         <Link
           href={props.node.id}
-          className="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+          className="flex items-center rounded-lg p-2 text-gray-900 focus:outline-none focus-visible:outline-none hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
         >
           <div className="flex gap-3">
             {!props.node.isLeaf && props.node.isOpen ? (

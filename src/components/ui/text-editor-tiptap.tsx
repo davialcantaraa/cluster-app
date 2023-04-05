@@ -8,6 +8,7 @@ import StarterKit from "@tiptap/starter-kit";
 import { useRef } from "react";
 import { useDidMount } from "rooks";
 import { useDocument } from "~/providers/document-provider";
+import { useWindowProvider } from "~/providers/window-provider";
 import { IDocument } from "~/types/document";
 
 interface TextEditorTipTapProps {
@@ -20,6 +21,7 @@ export const TextEditorTipTap = ({
   const titleRef = useRef<HTMLHeadingElement>(null);
   const { handleInputChange, handleTitleChange } =
     useDocument(incomingDocument);
+  const { hotkeys } = useWindowProvider();
 
   useDidMount(() => {
     if (titleRef.current) {
@@ -93,7 +95,7 @@ export const TextEditorTipTap = ({
           className="before:text-mauve-11 before-pointer-events-none cursor-text before:absolute before:opacity-50 before:content-[attr(data-placeholder)] focus:outline-none"
         />
       </div>
-      <EditorContent editor={editor} />
+      <EditorContent editor={editor} onKeyDown={getHotkeyHandler(hotkeys)} />
     </div>
   );
 };
