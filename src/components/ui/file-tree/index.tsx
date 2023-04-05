@@ -1,49 +1,27 @@
 import { ChevronDown, ChevronRight, File, Folder } from "lucide-react";
+import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import { CursorProps, NodeRendererProps, Tree, TreeApi } from "react-arborist";
 import { TreeProps } from "react-arborist/dist/types/tree-props";
+import { useDidUpdate } from "rooks";
+import { useDocument } from "~/providers/document-provider";
 import { FileTreeProvider, useFileTreeProvider } from "./file-tree-provider";
-
-// TODO:
-// Fix node focus
-
-const data = [
-  { id: "1", name: "Unread" },
-  { id: "2", name: "Threads" },
-  {
-    id: "3",
-    name: "Chat Rooms",
-    children: [
-      { id: "c1", name: "General" },
-      { id: "c2", name: "Random" },
-      { id: "c3", name: "Open Source Projects" },
-    ],
-  },
-  {
-    id: "4",
-    name: "Direct Messages",
-    children: [
-      { id: "d1", name: "Alice" },
-      { id: "d2", name: "Bob" },
-      { id: "d3", name: "Charlie" },
-    ],
-  },
-];
 
 const PagesTreeContent = (props: TreeProps<any>) => {
   const { nodeClicked } = useFileTreeProvider();
   const treeRef = useRef<TreeApi<any>>(null);
-  const [height, setHeight] = useState(data.length * 36);
+  const [height, setHeight] = useState(36);
+  const { documentsFileTree } = useDocument();
 
   const TreeView = (
     <Tree
       ref={treeRef}
-      initialData={data}
+      data={documentsFileTree}
       openByDefault={false}
       renderCursor={Cursor}
       width="100%"
       height={height}
-      className="scrollbar scrollbar-none"
+      className="scrollbar scrollbar-none focus:outline-none"
       rowHeight={34}
       indent={28}
       {...props}
@@ -52,13 +30,21 @@ const PagesTreeContent = (props: TreeProps<any>) => {
     </Tree>
   );
 
-  useEffect(() => {
+  useDidUpdate(() => {
     const tree = treeRef.current;
     const openedItems = tree?.visibleNodes;
     if (openedItems) {
       setHeight(openedItems?.length * 36);
     }
   }, [nodeClicked]);
+
+  useEffect(() => {
+    console.log("updated");
+    const tree = treeRef.current;
+    tree?.update(documentsFileTree);
+  }, [documentsFileTree]);
+
+  if (!documentsFileTree.length) return null;
 
   return TreeView;
 };
@@ -74,10 +60,11 @@ const Node = (props: NodeRendererProps<any>) => {
         props.node.isInternal && props.node.toggle();
         handleToggle();
       }}
+      className="focus:outline-none focus-visible:outline-none"
     >
       <li>
-        <a
-          href="#"
+        <Link
+          href={props.node.id}
           className="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
         >
           <div className="flex gap-3">
@@ -89,7 +76,7 @@ const Node = (props: NodeRendererProps<any>) => {
             {props.node.isLeaf ? <File size={16} /> : <Folder size={16} />}
           </div>
           <span className="ml-3">{props.node.data.name}</span>
-        </a>
+        </Link>
       </li>
     </div>
   );
