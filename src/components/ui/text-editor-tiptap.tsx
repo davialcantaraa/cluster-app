@@ -1,11 +1,12 @@
 import { getHotkeyHandler } from "@mantine/hooks";
 import Highlight from "@tiptap/extension-highlight";
+import Link from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
 import Typography from "@tiptap/extension-typography";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useRef } from "react";
-import { useDidMount, useOutsideClickRef } from "rooks";
+import { useDidMount } from "rooks";
 import { useDocument } from "~/providers/document-provider";
 import { IDocument } from "~/types/document";
 
@@ -17,7 +18,6 @@ export const TextEditorTipTap = ({
   incomingDocument,
 }: TextEditorTipTapProps) => {
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const [editorRef] = useOutsideClickRef(() => editor?.commands.focus("end"));
   const { handleInputChange, handleTitleChange } =
     useDocument(incomingDocument);
 
@@ -57,11 +57,20 @@ export const TextEditorTipTap = ({
         emptyEditorClass:
           "cursor-text before:content-[attr(data-placeholder)] before:absolute before:text-mauve-11 before:opacity-50 before-pointer-events-none",
       }),
+      Link.configure({
+        autolink: false,
+        linkOnPaste: true,
+        HTMLAttributes: {
+          rel: "noopener noreferrer",
+          target: "_blank",
+          class: "cursor-pointer",
+        },
+      }),
     ],
     editorProps: {
       attributes: {
         class:
-          "prose prose-h1:text-4xl dark:prose-invert prose-p:my-0 prose-sm sm:prose-base lg:prose-lg xl:prose-md m-2 focus:outline-none mx-20",
+          "prose prose-h1:text-4xl dark:prose-invert prose-p:my-0 prose-sm sm:prose-base lg:prose-lg xl:prose-md m-2 focus:outline-none mx-20 mb-8",
       },
     },
     onUpdate: ({ editor }) => {
@@ -72,10 +81,7 @@ export const TextEditorTipTap = ({
   });
 
   return (
-    <div
-      className="flex min-w-4xl max-w-4xl cursor-text flex-col"
-      ref={editorRef}
-    >
+    <div className="flex min-w-4xl max-w-4xl cursor-text flex-col">
       <div className="xl:prose-md prose prose-sm mx-20 mt-20 max-h-[48px] dark:prose-invert sm:prose-base lg:prose-lg focus:outline-none prose-p:my-0">
         <h1
           ref={titleRef}
