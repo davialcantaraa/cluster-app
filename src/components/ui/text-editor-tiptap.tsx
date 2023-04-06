@@ -5,7 +5,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 import Typography from "@tiptap/extension-typography";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { useMount, useUpdateEffect } from "ahooks";
+import { useDebounceFn, useMount, useUpdateEffect } from "ahooks";
 import { useRouter } from "next/router";
 import { useDocument } from "~/providers/document-provider";
 import { useWindowProvider } from "~/providers/window-provider";
@@ -18,10 +18,19 @@ interface TextEditorTipTapProps {
 export const TextEditorTipTap = ({
   incomingDocument,
 }: TextEditorTipTapProps) => {
-  const { handleInputChange, handleTitleChange, titleRef, handleUpdateTitle } =
+  const { handleInputChange, titleRef, handleUpdateTitle } =
     useDocument(incomingDocument);
-  const { hotkeys } = useWindowProvider();
+  const { hotkeys, isSidebarVisible, toggleSidebar } = useWindowProvider();
   const router = useRouter();
+
+  const { run: handleEditorFocus } = useDebounceFn(
+    () => {
+      titleRef.current?.focus();
+    },
+    {
+      wait: 1000,
+    }
+  );
 
   useMount(() => {
     if (titleRef.current) {
@@ -45,7 +54,8 @@ export const TextEditorTipTap = ({
       if (titleRef.current) {
         titleRef.current.innerText = "";
         titleRef.current.setAttribute("data-placeholder", "Untitled");
-        titleRef.current.focus();
+        if (isSidebarVisible) toggleSidebar();
+        handleEditorFocus();
       }
     } else {
       if (titleRef.current) {
@@ -117,6 +127,7 @@ export const TextEditorTipTap = ({
           onInput={titleChangeHandler}
           onKeyDown={getHotkeyHandler([
             ["Enter", () => editor?.commands.focus()],
+            ...hotkeys,
           ])}
           className="before:text-mauve-11 before-pointer-events-none cursor-text before:absolute before:opacity-50 before:content-[attr(data-placeholder)] focus:outline-none"
         />
