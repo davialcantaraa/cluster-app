@@ -10,7 +10,7 @@ import {
 } from "./tooltip";
 
 export const Logo = () => {
-  const { handleToggleSidebar, visibleSidebarButtonRef } = useWindowProvider();
+  const { toggleSidebar, visibleSidebarButtonRef } = useWindowProvider();
 
   return (
     <div className="flex w-full items-center justify-between border-b p-3">
@@ -25,7 +25,7 @@ export const Logo = () => {
               ref={visibleSidebarButtonRef}
               variant="ghost"
               className="h-fit w-fit p-1 text-gray-400 hover:text-gray-500"
-              onClick={handleToggleSidebar}
+              onClick={toggleSidebar}
             >
               <ChevronLeft />
             </Button>
