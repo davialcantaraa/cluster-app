@@ -5,8 +5,8 @@ import Placeholder from "@tiptap/extension-placeholder";
 import Typography from "@tiptap/extension-typography";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { useRef } from "react";
-import { useDidMount } from "rooks";
+import { useMount, useUpdateEffect } from "ahooks";
+import { useRouter } from "next/router";
 import { useDocument } from "~/providers/document-provider";
 import { useWindowProvider } from "~/providers/window-provider";
 import { IDocument } from "~/types/document";
@@ -18,22 +18,49 @@ interface TextEditorTipTapProps {
 export const TextEditorTipTap = ({
   incomingDocument,
 }: TextEditorTipTapProps) => {
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const { handleInputChange, handleTitleChange } =
+  const { handleInputChange, handleTitleChange, titleRef, handleUpdateTitle } =
     useDocument(incomingDocument);
   const { hotkeys } = useWindowProvider();
+  const router = useRouter();
 
-  useDidMount(() => {
+  useMount(() => {
     if (titleRef.current) {
       if (incomingDocument.title) {
         titleRef.current.innerText = incomingDocument.title;
         editor?.commands.focus("end");
       } else {
+        console.log("caindo aqui dentro");
         titleRef.current.setAttribute("data-placeholder", "Untitled");
         titleRef.current.focus();
       }
     }
   });
+
+  useUpdateEffect(() => {
+    handleUpdatePageDocument();
+  }, [router.asPath]);
+
+  function handleUpdatePageDocument() {
+    if (incomingDocument.title === null) {
+      if (titleRef.current) {
+        titleRef.current.innerText = "";
+        titleRef.current.setAttribute("data-placeholder", "Untitled");
+        titleRef.current.focus();
+      }
+    } else {
+      if (titleRef.current) {
+        if (incomingDocument.title) {
+          titleRef.current.innerText = incomingDocument.title;
+          editor?.commands.focus("end");
+        } else {
+          titleRef.current.setAttribute("data-placeholder", "Untitled");
+          titleRef.current.focus();
+        }
+      }
+      editor?.commands.setContent(incomingDocument.content);
+      editor?.commands.focus("end");
+    }
+  }
 
   function titlePlaceholderHandler() {
     if (titleRef.current?.innerText === "") {
@@ -45,8 +72,7 @@ export const TextEditorTipTap = ({
 
   function titleChangeHandler() {
     titlePlaceholderHandler();
-    const title = titleRef.current?.innerText || "";
-    handleTitleChange(title);
+    handleUpdateTitle();
   }
 
   const editor = useEditor({
@@ -84,7 +110,7 @@ export const TextEditorTipTap = ({
 
   return (
     <div className="flex min-w-4xl max-w-4xl cursor-text flex-col">
-      <div className="xl:prose-md prose prose-sm mx-20 mt-20 max-h-[48px] dark:prose-invert sm:prose-base lg:prose-lg focus:outline-none prose-p:my-0">
+      <div className="xl:prose-md prose prose-sm mx-20 mt-20 w-fit dark:prose-invert sm:prose-base lg:prose-lg focus:outline-none prose-p:my-0">
         <h1
           ref={titleRef}
           contentEditable

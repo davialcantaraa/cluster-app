@@ -1,35 +1,57 @@
 import { useUser } from "@supabase/auth-helpers-react";
 import { useQuery } from "@tanstack/react-query";
+import { useDebounceFn } from "ahooks";
+import { useRouter } from "next/router";
 import {
   createContext,
   PropsWithChildren,
   useContext,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import { useInputDelay } from "~/hooks/use-input-delay";
+import { createDocument } from "~/server/create-document";
 import { fetchDocuments } from "~/server/fetch-documents";
 import { updateDocumentTitle } from "~/server/update-document-title";
 import { queryClient } from "~/services/react-query";
 import { supabase } from "~/services/supabase";
 import { IDocument } from "~/types/document";
+import { useWindowProvider } from "./window-provider";
 
 export const useDocument = (incomingDocument?: IDocument) => {
+  const user = useUser();
+  const router = useRouter();
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const { toggleSidebar, isSidebarVisible } = useWindowProvider();
   const { documentsFileTree, setDocumentsFileTree } =
     useContext(DocumentContext);
 
-  const user = useUser();
   const { inputValue: documentInputValue, handleInputChange } = useInputDelay(
     1500,
     () => handleUpdateDocumentInDatabase(documentInputValue)
+  );
+  const { run: handleUpdateTitle } = useDebounceFn(
+    () => {
+      handleUpdateDocumentTitle(titleRef.current?.innerText || "");
+    },
+    {
+      wait: 1000,
+    }
   );
   const {
     inputValue: documentTitleValue,
     handleInputChange: handleTitleChange,
   } = useInputDelay(1500, () => handleUpdateDocumentTitle(documentTitleValue));
 
+  async function handleCreateNewDocument() {
+    const document = await createDocument(user?.id!);
+    router.replace("/app/" + document?.id);
+  }
+
   async function handleUpdateDocumentTitle(title: string) {
     if (!incomingDocument) throw new Error("please provide a document");
+    console.log("updating document title");
     updateDocumentTitle(title, incomingDocument.id);
     queryClient.invalidateQueries(["fetch-documents"]);
   }
@@ -65,6 +87,9 @@ export const useDocument = (incomingDocument?: IDocument) => {
     handleTitleChange,
     documents,
     documentsFileTree,
+    handleCreateNewDocument,
+    titleRef,
+    handleUpdateTitle,
   };
 };
 

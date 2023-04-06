@@ -1,5 +1,5 @@
+import { useUpdateEffect } from "ahooks";
 import { Menu } from "lucide-react";
-import { useDidUpdate } from "rooks";
 import {
   navigationPrimaryItems,
   navigationSecondaryItems,
@@ -20,24 +20,24 @@ import { UserMenu } from "./user-menu";
 export const Sidebar = () => {
   const {
     isSidebarVisible,
-    handleToggleSidebar,
+    toggleSidebar,
     invisibleSidebarButtonRef,
     visibleSidebarButtonRef,
   } = useWindowProvider();
 
-  useDidUpdate(() => {
+  useUpdateEffect(() => {
     if (isSidebarVisible) {
       visibleSidebarButtonRef.current?.focus();
     } else {
       invisibleSidebarButtonRef.current?.focus();
     }
-  }, [handleToggleSidebar]);
+  }, [toggleSidebar]);
 
   return (
     <>
       <Button
         ref={invisibleSidebarButtonRef}
-        onClick={handleToggleSidebar}
+        onClick={toggleSidebar}
         variant="ghost"
         className={cn(
           "absolute top-0 left-0 m-4 p-2 text-gray-400 hover:text-gray-500",

@@ -12,7 +12,7 @@ import {
 
 interface IWindowContext {
   isSidebarVisible: boolean;
-  handleToggleSidebar: () => void;
+  toggleSidebar: () => void;
   invisibleSidebarButtonRef: RefObject<HTMLButtonElement>;
   visibleSidebarButtonRef: RefObject<HTMLButtonElement>;
   isCommandDialogVisible: boolean;
@@ -28,7 +28,7 @@ export const WindowProvider = ({ children }: PropsWithChildren) => {
     ["ctrl+J", () => console.log("Trigger search")],
     ["alt+mod+shift+X", () => console.log("Rick roll")],
     ["ctrl+K", () => toggleCommandDialog()],
-    ["ctrl+alt+S", () => handleToggleSidebar()],
+    ["ctrl+alt+S", () => toggleSidebar()],
   ];
   useHotkeys(hotkeys);
   const invisibleSidebarButtonRef = useRef<HTMLButtonElement>(null);
@@ -40,14 +40,14 @@ export const WindowProvider = ({ children }: PropsWithChildren) => {
     setIsCommandDialogVisible((prev) => !prev);
   }, [isCommandDialogVisible]);
 
-  const handleToggleSidebar = useCallback(() => {
+  const toggleSidebar = useCallback(() => {
     setIsSidebarVisible((prev) => !prev);
   }, [isSidebarVisible]);
 
   const value = useMemo(
     () => ({
       isSidebarVisible,
-      handleToggleSidebar,
+      toggleSidebar,
       invisibleSidebarButtonRef,
       visibleSidebarButtonRef,
       isCommandDialogVisible,
@@ -56,7 +56,7 @@ export const WindowProvider = ({ children }: PropsWithChildren) => {
     }),
     [
       isSidebarVisible,
-      handleToggleSidebar,
+      toggleSidebar,
       invisibleSidebarButtonRef,
       visibleSidebarButtonRef,
       isCommandDialogVisible,
@@ -73,7 +73,7 @@ export const WindowProvider = ({ children }: PropsWithChildren) => {
 export const useWindowProvider = () => {
   const {
     isSidebarVisible,
-    handleToggleSidebar,
+    toggleSidebar,
     invisibleSidebarButtonRef,
     visibleSidebarButtonRef,
     isCommandDialogVisible,
@@ -82,7 +82,7 @@ export const useWindowProvider = () => {
   } = useContext(WindowContext);
   return {
     isSidebarVisible,
-    handleToggleSidebar,
+    toggleSidebar,
     invisibleSidebarButtonRef,
     visibleSidebarButtonRef,
     isCommandDialogVisible,
