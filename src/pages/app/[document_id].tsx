@@ -28,8 +28,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   const parsedDocumentId = UUIDSchema.parse(document_id);
 
-  console.log(document_id);
-
   const { data: document } = await supabase
     .from("documents")
     .select()

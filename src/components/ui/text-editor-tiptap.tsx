@@ -28,7 +28,7 @@ export const TextEditorTipTap = ({
       titleRef.current?.focus();
     },
     {
-      wait: 1000,
+      wait: 500,
     }
   );
 
@@ -38,7 +38,6 @@ export const TextEditorTipTap = ({
         titleRef.current.innerText = incomingDocument.title;
         editor?.commands.focus("end");
       } else {
-        console.log("caindo aqui dentro");
         titleRef.current.setAttribute("data-placeholder", "Untitled");
         titleRef.current.focus();
       }
@@ -53,6 +52,7 @@ export const TextEditorTipTap = ({
     if (incomingDocument.title === null) {
       if (titleRef.current) {
         titleRef.current.innerText = "";
+        editor?.commands.setContent("");
         titleRef.current.setAttribute("data-placeholder", "Untitled");
         if (isSidebarVisible) toggleSidebar();
         handleEditorFocus();

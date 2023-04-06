@@ -40,7 +40,7 @@ export const Sidebar = () => {
         onClick={toggleSidebar}
         variant="ghost"
         className={cn(
-          "absolute top-0 left-0 m-4 p-2 text-gray-400 hover:text-gray-500",
+          "fixed top-0 left-0 m-4 p-2 text-gray-400 hover:text-gray-500",
           !isSidebarVisible ? "flex" : "hidden"
         )}
       >
