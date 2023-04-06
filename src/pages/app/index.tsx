@@ -1,15 +1,21 @@
+import dynamic from "next/dynamic";
 import { ReactElement } from "react";
+import { TextEditor } from "~/components/text-editor";
 import { AppLayout } from "~/layouts/app-layout";
 import { cn } from "~/lib/utils";
 import { useWindowProvider } from "~/providers/window-provider";
 import type { NextPageWithLayout } from "~/types/global";
+
+const DynamicTextEditor = dynamic(() => Promise.resolve(TextEditor), {
+  ssr: false,
+});
 
 const AppPage: NextPageWithLayout = () => {
   const { isSidebarVisible } = useWindowProvider();
 
   return (
     <main className={cn("flex justify-center", isSidebarVisible && "sm:ml-64")}>
-      <div className="min-w-4xl max-w-4xl">akjsdlka</div>
+      {/* <DynamicTextEditor /> */}
     </main>
   );
 };

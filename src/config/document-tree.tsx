@@ -100,4 +100,3 @@ const longTreeTemplate = {
 };
 
 export const longTree = readTemplate(longTreeTemplate);
-console.log(longTree);
