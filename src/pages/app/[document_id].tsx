@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
 import { ReactElement } from "react";
-import { TextEditorTipTap } from "~/components/ui/text-editor-tiptap";
+import { TextEditorTipTap } from "~/components/text-editor-tiptap";
 import { AppLayout } from "~/layouts/app-layout";
 import { cn } from "~/lib/utils";
 import { UUIDSchema } from "~/lib/validation/utils";

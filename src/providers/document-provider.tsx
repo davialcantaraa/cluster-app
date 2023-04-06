@@ -1,6 +1,6 @@
 import { useUser } from "@supabase/auth-helpers-react";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useBoolean, useDebounceFn, useUpdateEffect } from "ahooks";
+import { useDebounceFn, useUpdateEffect } from "ahooks";
 import { useRouter } from "next/router";
 import {
   createContext,
@@ -13,6 +13,7 @@ import {
   useState,
 } from "react";
 import { toast } from "sonner";
+import { convertArrayToObject, rootItem } from "~/config/document-tree";
 import { useInputDelay } from "~/hooks/use-input-delay";
 import { createDocument } from "~/server/create-document";
 import { deleteDocument } from "~/server/delete-document";
@@ -31,8 +32,6 @@ export const useDocument = (incomingDocument?: IDocument) => {
     setDocumentsFileTree,
     setCurrentDocument,
     currentDocument,
-    toggleDeleteModal,
-    isDeleteModalOpen,
   } = useContext(DocumentContext);
 
   const { inputValue: documentInputValue, handleInputChange } = useInputDelay(
@@ -75,18 +74,24 @@ export const useDocument = (incomingDocument?: IDocument) => {
       .eq("id", incomingDocument.id);
   }
 
-  console.log(documentsFileTree);
-
   const { data: documents } = useQuery({
     queryKey: ["fetch-documents"],
     queryFn: () => fetchDocuments(user?.id!),
     onSuccess: (data) => {
-      setDocumentsFileTree(
-        data.map((item: IDocument) => ({
-          id: item.id,
-          name: item.title,
-        }))
-      );
+      const items = data.map((item: IDocument) => ({
+        index: item.id,
+        canMove: true,
+        isFolder: false,
+        children: undefined,
+        data: item.title,
+        canRename: true,
+        path: "/app/" + item.id,
+      }));
+      const newRootItem = rootItem;
+      newRootItem.children = items.map((item: any) => item.index);
+      const completeArray = [newRootItem, ...items];
+      const objectFromArray = convertArrayToObject(completeArray, "index");
+      setDocumentsFileTree(objectFromArray);
     },
     enabled: !!user,
   });
@@ -107,8 +112,6 @@ export const useDocument = (incomingDocument?: IDocument) => {
     handleUpdateTitle,
     handleDeleteDocument,
     currentDocument,
-    toggleDeleteModal,
-    isDeleteModalOpen,
   };
 };
 
@@ -117,8 +120,6 @@ interface IDocumentContext {
   setDocumentsFileTree: any;
   currentDocument: IDocument | undefined;
   setCurrentDocument: Dispatch<SetStateAction<IDocument | undefined>>;
-  isDeleteModalOpen: boolean;
-  toggleDeleteModal: () => void;
 }
 
 export const DocumentContext = createContext({} as IDocumentContext);
@@ -128,7 +129,6 @@ export const DocumentProvider = ({ children }: PropsWithChildren) => {
     IDocument | undefined
   >();
   const [documentsFileTree, setDocumentsFileTree] = useState<any>([]);
-  const [isDeleteModalOpen, { toggle: toggleDeleteModal }] = useBoolean(false);
 
   const value = useMemo(
     () => ({
@@ -136,16 +136,12 @@ export const DocumentProvider = ({ children }: PropsWithChildren) => {
       setDocumentsFileTree,
       currentDocument,
       setCurrentDocument,
-      toggleDeleteModal,
-      isDeleteModalOpen,
     }),
     [
       documentsFileTree,
       setDocumentsFileTree,
       currentDocument,
       setCurrentDocument,
-      toggleDeleteModal,
-      isDeleteModalOpen,
     ]
   );
 

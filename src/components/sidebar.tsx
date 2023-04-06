@@ -1,12 +1,13 @@
 import { useUpdateEffect } from "ahooks";
 import { Menu } from "lucide-react";
+import dynamic from "next/dynamic";
 import {
   navigationPrimaryItems,
   navigationSecondaryItems,
 } from "~/config/navigation";
 import { cn } from "~/lib/utils";
 import { useWindowProvider } from "~/providers/window-provider";
-import { PagesTree } from "./file-tree";
+import { DocumentTree } from "./document-tree";
 import { Logo } from "./logo";
 import { Button } from "./ui/button";
 import { UserMenu } from "./user-menu";
@@ -16,6 +17,10 @@ import { UserMenu } from "./user-menu";
 //  Integrate to supabase
 //  Create loading state
 // https://github.com/radix-ui/design-system/blob/master/components/Skeleton.tsx
+
+const DynamicTree = dynamic(() => Promise.resolve(DocumentTree), {
+  ssr: false,
+});
 
 export const Sidebar = () => {
   const {
@@ -77,7 +82,7 @@ export const Sidebar = () => {
                 ))}
               </div>
             ))}
-            <PagesTree />
+            {typeof window !== undefined && <DynamicTree />}
             {navigationSecondaryItems.map((navigation) => (
               <div key={navigation.value} className="space-y-1">
                 {navigation.items.map((item) => (
