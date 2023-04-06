@@ -1,4 +1,4 @@
-import { MenubarItem, MenubarSeparator, MenubarShortcut } from "./menu-bar";
+import { MenubarItem, MenubarSeparator, MenubarShortcut } from "./ui/menu-bar";
 
 interface DocumentMenuBarItemProps {
   item:

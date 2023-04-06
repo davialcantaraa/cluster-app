@@ -1,13 +1,13 @@
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { useWindowProvider } from "~/providers/window-provider";
-import { Button } from "./button";
+import { Button } from "./ui/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./tooltip";
+} from "./ui/tooltip";
 
 export const Logo = () => {
   const { toggleSidebar, visibleSidebarButtonRef } = useWindowProvider();

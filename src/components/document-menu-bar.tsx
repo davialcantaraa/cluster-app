@@ -6,7 +6,7 @@ import {
   MenubarContent,
   MenubarMenu,
   MenubarTrigger,
-} from "./menu-bar";
+} from "./ui/menu-bar";
 
 interface DocumentMenuBarProps {
   document_id: string;

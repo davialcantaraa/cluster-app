@@ -6,9 +6,9 @@ import {
 } from "~/config/navigation";
 import { cn } from "~/lib/utils";
 import { useWindowProvider } from "~/providers/window-provider";
-import { Button } from "./button";
 import { PagesTree } from "./file-tree";
 import { Logo } from "./logo";
+import { Button } from "./ui/button";
 import { UserMenu } from "./user-menu";
 
 //  TODO:

@@ -7,7 +7,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from ".";
+} from "./ui/command";
 
 export const CommandDialog = () => {
   const { isCommandDialogVisible, toggleCommandDialog, hotkeys } =

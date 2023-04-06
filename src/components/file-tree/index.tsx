@@ -29,7 +29,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "../alert-dialog";
+} from "../ui/alert-dialog";
 import {
   Menubar,
   MenubarContent,
@@ -38,7 +38,7 @@ import {
   MenubarSeparator,
   MenubarShortcut,
   MenubarTrigger,
-} from "../menu-bar";
+} from "../ui/menu-bar";
 import { FileSkeleton } from "./file-skeleton";
 import { FileTreeProvider, useFileTreeProvider } from "./file-tree-provider";
 
