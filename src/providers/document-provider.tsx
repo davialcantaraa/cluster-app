@@ -1,5 +1,6 @@
 "use client";
 
+import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { useUser } from "@supabase/auth-helpers-react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useDebounceFn, useUpdateEffect } from "ahooks";
@@ -22,10 +23,10 @@ import { deleteDocument } from "~/server/delete-document";
 import { fetchDocuments } from "~/server/fetch-documents";
 import { updateDocumentTitle } from "~/server/update-document-title";
 import { queryClient } from "~/services/react-query";
-import { supabase } from "~/services/supabase";
 import { IDocument } from "~/types/document";
 
 export const useDocument = (incomingDocument?: IDocument) => {
+  const [supabase] = useState(() => createBrowserSupabaseClient());
   const user = useUser();
   const router = useRouter();
   const titleRef = useRef<HTMLHeadingElement>(null);
