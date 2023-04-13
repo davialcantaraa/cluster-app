@@ -56,7 +56,7 @@ export const useDocument = (incomingDocument?: IDocument) => {
     mutationKey: ["delete-document"],
     mutationFn: (document_id: string) => deleteDocument(user?.id!, document_id),
     onSuccess: () => {
-      toast("Document delete sucessfully");
+      toast("Document deleted successfully");
     },
   });
 
