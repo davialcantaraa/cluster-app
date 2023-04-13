@@ -1,3 +1,5 @@
+"use client";
+
 import { ChevronDown, ChevronRight, File, Folder, Plus } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";

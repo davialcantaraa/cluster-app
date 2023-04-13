@@ -1,3 +1,5 @@
+"use client";
+
 import { getHotkeyHandler } from "@mantine/hooks";
 import Highlight from "@tiptap/extension-highlight";
 import Link from "@tiptap/extension-link";

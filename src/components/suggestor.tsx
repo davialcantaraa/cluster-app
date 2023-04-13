@@ -1,3 +1,5 @@
+"use client";
+
 import { FloatingWrapper, useMention } from "@remirror/react";
 import { useEffect, useState } from "react";
 import { MentionExtensionAttributes } from "remirror/dist-types/extensions";

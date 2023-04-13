@@ -1,3 +1,5 @@
+"use client";
+
 import { useUpdateEffect } from "ahooks";
 import { Menu } from "lucide-react";
 import dynamic from "next/dynamic";

@@ -1,3 +1,5 @@
+"use client";
+
 import { getHotkeyHandler } from "@mantine/hooks";
 import { useWindowProvider } from "~/providers/window-provider";
 import {

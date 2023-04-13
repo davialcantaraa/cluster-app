@@ -1,3 +1,5 @@
+"use client";
+
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { useWindowProvider } from "~/providers/window-provider";

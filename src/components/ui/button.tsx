@@ -1,3 +1,5 @@
+"use client";
+
 import { cva, VariantProps } from "class-variance-authority";
 import { motion } from "framer-motion";
 import * as React from "react";

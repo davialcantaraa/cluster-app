@@ -1,3 +1,5 @@
+"use client";
+
 import { useUser } from "@supabase/auth-helpers-react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useDebounceFn, useUpdateEffect } from "ahooks";

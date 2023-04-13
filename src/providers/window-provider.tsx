@@ -1,3 +1,5 @@
+"use client";
+
 import { HotkeyItem, useHotkeys } from "@mantine/hooks";
 import {
   createContext,

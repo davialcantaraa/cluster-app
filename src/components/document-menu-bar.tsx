@@ -1,3 +1,5 @@
+"use client";
+
 import { useBoolean, useUpdateEffect } from "ahooks";
 import { Loader2, MoreHorizontal } from "lucide-react";
 import { useRouter } from "next/router";
