@@ -8,19 +8,12 @@ import { ReactElement, useState } from "react";
 import { Toaster } from "sonner";
 import "~/styles/globals.css";
 import type { AppPropsWithLayout } from "~/types/global";
-import { api } from "~/utils/api";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
 });
-
-// const roboto_mono = Roboto_Mono({
-//   subsets: ["latin"],
-//   variable: "--font-roboto-mono",
-//   display: "swap",
-// });
 
 const MyApp = ({
   Component,
@@ -48,4 +41,4 @@ const MyApp = ({
   );
 };
 
-export default api.withTRPC(MyApp);
+export default MyApp;
