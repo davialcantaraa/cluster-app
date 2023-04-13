@@ -85,7 +85,7 @@ export const useDocument = (incomingDocument?: IDocument) => {
         children: undefined,
         data: item.title,
         canRename: true,
-        path: "/app/" + item.id,
+        path: "/document/" + item.id,
       }));
       const newRootItem = rootItem;
       newRootItem.children = items.map((item: any) => item.index);
